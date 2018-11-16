@@ -5,31 +5,38 @@ class Pessoa:
         self.telefone = nome
 
     def __str__(self):
-        return '''
-        ---------
-        nome: {}
-        endereco: {}
-        telefone: {}
-        '''.format(self.nome, self.endereco, self.telefone)
+        return f'''
+            nome: {self.nome}
+            endereco: {self.endereco}
+            telefone: {self.telefone}'''
 class PessoaFisica(Pessoa):
     def __init__(self, nome, endereco, telefone, cpf):
         super(type(self), self).__init__(nome, endereco, telefone)
         self.cpf = cpf
+
     def __str__(self):
-        return super(type(self), self).__str__() + '''
-        cpf: {}
-        ---------'''.format(self.cpf)
+        return \
+        f'''{super(type(self), self).__str__()}
+            cpf: {self.cpf}
+        '''
+
+    def __repr__(self):
+        return str(self)
 
 class PessoaJuridica(Pessoa):
     def __init__(self, nome, endereco, telefone, cnpj, fantasia):
         super(type(self), self).__init__(nome, endereco, telefone)
         self.cnpj = cnpj
         self.fantasia = fantasia
+
     def __str__(self):
-        return super(type(self), self).__str__() + '''
-        cnpj: {}
-        nome fantasia: {}
-        ---------'''.format(self.fantasia)
+        return \
+        f'''{super(type(self), self).__str__()}
+            cnpj: {self.cnpj}
+            nome fantasia: {self.fantasia}
+        '''
+    def __repr__(self):
+        return str(self)
 
 class Empresa:
     qtd_fisicas = 0
@@ -41,20 +48,22 @@ class Empresa:
             type(self).qtd_juridicas += 1
         else:
             type(self).qtd_fisicas += 1
+        self.clientes.append(cliente)
     def __str__(self):
-        return 
-        '''Pessoas fisicas: {qtd_fisicas}
-        Pessoas juridicas: {qtd_juridicas}
-        Total de pessoas: {qtd_fisicas}
-        Clientes:\n {}'''.format(qtd_fisicas, qtd_juridicas, qtd_fisicas + qtd_juridicas)
+        return f'''\
+        Pessoas fisicas: {type(self).qtd_fisicas}
+        Pessoas juridicas: {type(self).qtd_juridicas}
+        Total de pessoas: {type(self).qtd_fisicas + type(self).qtd_juridicas}
+        Clientes:
+        {self.clientes}'''
 
 if(__name__ == "__main__"):
-    Pablo = PessoaFisica("Pablo", "Rua de Pablo", "4002 8922", "000.000.000-00")
-    Leonardo = PessoaJuridica("Leonardo", "Rua do Python", "4349987377", "000.000/321", "Python World")
+    primeira_pessoa = PessoaFisica("Primeira", "Rua um", "(11) 11111-1111", "010.101.010-01")
+    segunda_pessoa = PessoaJuridica("Segundo", "Rua dois", "(22) 22222-2222", "222.222.222/2222-22", "Dois Tech Informática")
 
     emp = Empresa()
-    emp.cadastrar(Pablo)
-    emp.cadastrar(Leonardo)
+    emp.cadastrar(primeira_pessoa)
+    emp.cadastrar(segunda_pessoa)
 
     print(emp)
 
